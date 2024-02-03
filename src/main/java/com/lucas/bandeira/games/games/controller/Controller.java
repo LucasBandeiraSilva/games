@@ -3,6 +3,7 @@ package com.lucas.bandeira.games.games.controller;
 import com.lucas.bandeira.games.games.entity.Games;
 import com.lucas.bandeira.games.games.record.dto.GamesRecordDto;
 import com.lucas.bandeira.games.games.repository.GamesRepository;
+import com.lucas.bandeira.games.games.service.GameService;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,62 +21,30 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 @RequestMapping(value = "/games")
 public class Controller {
     @Autowired
-    private GamesRepository repository;
+    private GameService gameService;
 
     @PostMapping
     public ResponseEntity<Object> create(@Valid @RequestBody GamesRecordDto dto, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return ResponseEntity.badRequest().body(bindingResult.getAllErrors());
-        }
-        var games = new Games(dto);
-        repository.save(games);
-        return ResponseEntity.status(HttpStatus.CREATED).body(games);
+        return  gameService.create(dto,bindingResult);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Games> findById(@PathVariable Long id) {
-        Optional<Games> gamesOptional = repository.findById(id);
-        if (gamesOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.FOUND).body(gamesOptional.get());
-
-        }
-        return ResponseEntity.noContent().build();
+       return gameService.findById(id);
     }
 
     @GetMapping
     public ResponseEntity<List<Games>> findAll() {
-        List<Games> gamesList = repository.findAll();
-        if (gamesList.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-        for (Games games : gamesList) {
-
-            games.add(linkTo(methodOn(Controller.class).findById(games.getId())).withSelfRel());
-
-            return ResponseEntity.ok().body(gamesList);
-        }
-        return ResponseEntity.internalServerError().build();
+        return gameService.findAll();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteById(@PathVariable Long id) {
-        Optional<Games> gamesOptional = repository.findById(id);
-        if (gamesOptional.isPresent()) {
-            repository.deleteById(id);
-            return ResponseEntity.ok("The game has been deleted");
-        } else
-            throw new RuntimeException("Id: " + id + " does not exists!");
+        return gameService.deleteById(id);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Games> updateById(@PathVariable Long id, @RequestBody GamesRecordDto dto) {
-        Optional<Games> gamesOptional = repository.findById(id);
-        if (gamesOptional.isPresent()) {
-            Games saveGame = gamesOptional.get();
-            BeanUtils.copyProperties(dto,saveGame);
-            return ResponseEntity.ok().body(repository.save(saveGame));
-        } else
-            throw new RuntimeException("Id: " + id + " does not exists!");
-
+       return gameService.updateById(id,dto);
     }
 }
