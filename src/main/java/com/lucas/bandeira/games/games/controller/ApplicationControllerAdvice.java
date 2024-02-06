@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.time.Instant;
 
 @RestControllerAdvice
-public class AplicattionControllerAdvice {
+public class ApplicationControllerAdvice {
 
 
     @ExceptionHandler(GameNotFoundException.class)
