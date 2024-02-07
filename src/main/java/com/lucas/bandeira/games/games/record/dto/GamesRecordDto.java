@@ -5,5 +5,5 @@ import jakarta.validation.constraints.NotNull;
 
 import java.time.Year;
 
-public record GamesRecordDto(@NotBlank String name, @NotNull Year release_year,@NotBlank String shortDescription, @NotBlank String image) {
+public record GamesRecordDto(@NotBlank String name, @NotNull Integer release_year,@NotBlank String shortDescription, @NotBlank String image) {
 }
