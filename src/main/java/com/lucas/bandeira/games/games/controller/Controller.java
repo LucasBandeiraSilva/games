@@ -33,7 +33,7 @@ public class Controller {
     @GetMapping
     public ResponseEntity<List<Games>> findAll() {
         List <Games> gamesList = gameService.findAll();
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.OK).body(gamesList);
     }
 
     @DeleteMapping("/{id}")

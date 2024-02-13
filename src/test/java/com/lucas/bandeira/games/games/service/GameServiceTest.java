@@ -49,7 +49,7 @@ class GameServiceTest {
 
         when(gamesRepository.save(any())).thenAnswer(invocation -> {
             Games game = invocation.getArgument(0);
-            game.setId(1L); // Simulando um ID gerado pelo banco de dados
+            game.setId(1L);
             return game;
         });
 
