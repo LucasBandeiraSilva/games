@@ -28,38 +28,23 @@ Api RestFUl Games with Spring boot (version 3.2.1) which provides endpoints for 
 
 # RESTful resource routing for User
 
-- ## Get One User
+- ## Get One Game
 ``Method : GET`` <br>
-``http://localhost:8080/users/{id}``
-- ## Get All Users
+``http://localhost:8080/game/{id}``
+- ## Get All games
 ``Method : GET`` <br>
-``http://localhost:8080/users``
-- ## Create a new user
+``http://localhost:8080/games``
+- ## Create a new game
 ``Method : POST`` <br>
-``http://localhost:8080/users`` <br>
-- ## Update an user
+``http://localhost:8080/game`` <br>
+- ## Update a game
 ``Method : PUT`` <br>
-``http://localhost:8080/users{id}`` <br>
-- ## Delete an user
+``http://localhost:8080/game{id}`` <br>
+- ## Delete a game
 ``Method : DELETE`` <br>
-``http://localhost:8080/users/{id}``
+``http://localhost:8080/game/{id}``
 
 # 
 ##  Important Note
 
 you must replace {id} for the real id when you test the route
-
-
-# Example: creating a user
-
-```java
-{
-    "name":"Lucas",
-    "age":20,
-    "email":"lucas@gmail.com",
-    "password": "lucas123",
-    "department":{
-        "id":1
-    }
-}
-```
